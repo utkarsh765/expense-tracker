@@ -5,21 +5,28 @@ const cors = require("cors");
 
 const app = express();
 const allowedOrigins = [
-  process.env.CLIENT_URL || "https://expense-tracker-4scp.vercel.app",
   "http://localhost:5173",
+  "https://expense-tracker-4scp.vercel.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      // allow requests with no origin (like mobile apps, curl)
+      if (!origin) return callback(null, true);
+
+      // allow exact matches OR any vercel.app domain
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app")
+      ) {
+        return callback(null, true);
       }
+
+      return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
-  }),
+  })
 );
 app.use(express.json());
 
