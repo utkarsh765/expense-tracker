@@ -48,19 +48,29 @@ export default function Layout() {
         </nav>
         <button
           onClick={toggle}
-          className="flex items-center mt-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-left"
+          className="w-full flex items-center justify-between mt-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition"
         >
-          {theme === "dark" ? (
-            <>
+          <div className="flex items-center">
+            {theme === "dark" ? (
               <Sun className="w-5 h-5 mr-3" />
-              Light
-            </>
-          ) : (
-            <>
+            ) : (
               <Moon className="w-5 h-5 mr-3" />
-              Dark
-            </>
-          )}
+            )}
+
+            <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+          </div>
+
+          <div
+            className={`w-10 h-6 rounded-full p-1 transition-colors ${
+              theme === "dark" ? "bg-indigo-600" : "bg-slate-300"
+            }`}
+          >
+            <div
+              className={`w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${
+                theme === "dark" ? "translate-x-4" : "translate-x-0"
+              }`}
+            />
+          </div>
         </button>
         <div className="mt-2 text-sm">
           <div className="px-3 py-2 truncate">{user?.name}</div>

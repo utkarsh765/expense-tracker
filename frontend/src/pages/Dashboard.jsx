@@ -28,7 +28,18 @@ export default function Dashboard() {
     navigate("/transactions");
   };
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-slate-300 border-t-indigo-600 rounded-full animate-spin"></div>
+          <p className="text-slate-500 dark:text-slate-400">
+            Loading dashboard...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const labels = Object.keys(data.byCategory);
   const values = Object.values(data.byCategory);
